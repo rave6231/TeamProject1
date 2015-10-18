@@ -1,0 +1,64 @@
+h1 {
+	text-align: center;
+	color: ##0D3349;
+	background-color: #fef000;
+}
+h2, h3 {
+	color: black;
+	text-align: center;
+}
+
+iframe {
+	background-color: #fefcef;
+	font-size: 12px right : 0;
+	bottom: 0;
+	left:right;
+	float: left;
+	width="200";
+	height="100" ;
+	frameborder="1";
+
+}
+
+
+.body1 {
+	background-image: url(img/bk.jpg);
+	margin: 0px auto;
+	text-align: center;
+	color: Black;
+	background-size: 100% auto;
+}
+.tab {
+	margin-left: 40px;
+}
+
+figcaption {
+	text-align: center;
+	color: navy;
+	font-size: 1.2em;
+}
+
+#wrapper {
+	width: 900px;
+	margin: 10px 5px 5px 0px;
+}
+#footer {
+	position: absolute;
+	width: 850px;
+	bottom: 0;
+	height: 40px;
+	margin-top: 40px;
+	color: black;
+	font-style: italic;
+	font-size: 12px text-align : center;
+}
+
+input[type=submit] {
+	border-radius: 5px;
+	border: 10;
+	width: 160px;
+	height: 40px;
+	padding: 5px;
+	font-family: Tahoma;
+	background: #ffdb1a;
+}

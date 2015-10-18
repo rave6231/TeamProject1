@@ -1,0 +1,33 @@
+table {
+			border-collapse: collapse;
+			border: 4px solid black;
+			width: 100%
+		}
+		th {
+			border: 2px solid black;
+			vertical-align: middle;
+			height: 35px;
+			background-color: black;
+			color: white;
+			font-size: 25px;
+		}
+		td {
+			border: 2px solid black;
+			background-color: #D2E0E6;
+			vertical-align: middle;
+			height: 25px;
+			padding: 10px;
+			font-size: 18px;
+		}
+		.tblBlk {
+			background-color: #0D3349;
+			color: white;
+			font-size: 30px;
+			text-align: center;
+		}
+		.tblRw1{
+			background-color: #F8FFE8;
+			color: black;
+			
+		}
+		
