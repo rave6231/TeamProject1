@@ -1,5 +1,5 @@
 <?php
-
+//comment
 
 include 'include/database.inc.php';
 include 'include/dbSQL.inc.php';
