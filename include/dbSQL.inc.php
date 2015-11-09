@@ -1,76 +1,96 @@
 <?php
 
-
-
-function displayCategories(){
-	$sql = "SELECT categoryId, categoryName
-		FROM oe_category WHERE 1";
+function displayGenre(){
+	$sql = "SELECT prd_genre_ID, prd_genre_desc
+		FROM prd_genre WHERE 1";
 	$records = getDataBySQL($sql);
     foreach ($records as $record){
-    	echo "<option value = '" . $record['categoryId'] . 
-    	"'>" . $record['categoryName'] . "</option>";
+    	echo "<option value = '" . $record['prd_genre_ID'] . 
+    	"'>" . $record['prd_genre_desc'] . "</option>";
     }
 } 
 
 
-
-
 function displayAllProducts() {
-	$sql = "SELECT productName, price, productId  FROM oe_product";
-	$records = getDataBySQL($sql);
-	return $records;
 	
-	/*
-	foreach($records as $record) {
-		echo $record['productName'] . "-" . $record['price'] . "<br>";
-	}
-	 */
+	$sql = "SELECT p.`prd_pricing` , p.`prd_sell_Id` , p.`prd_movie_Id` , s.`prd_sell_name` , m.`prd_movie_nm` , m.`prd_movie_year`, m.`prd_movie_dir` \n"
+     . "FROM `prd_movie` m, `prd_pricing` p\n"
+     . "LEFT OUTER JOIN `prd_sell_typ` s ON s.`prd_sell_Id` = p.`prd_sell_Id` \n"
+     . "WHERE p.`prd_movie_Id` = m.`prd_movie_Id` LIMIT 0, 30 ";
+	
+	$records = getDataBySQL($sql);
+	 
+		return $records;
 	
 }
 
 function filterProducts(){
 global $conn;
-	if (isset($_GET['searchForm'])) {  //user submitted the filter form
+
+$sql = "SELECT p.`prd_pricing` , p.`prd_sell_Id` , p.`prd_movie_Id` , s.`prd_sell_name` , m.`prd_movie_nm` ,m.`prd_movie_year`, m.`prd_movie_dir` 
+	                 FROM `prd_movie` m,  `prd_pricing` p
+	                 LEFT OUTER JOIN `prd_sell_typ` s ON s.`prd_sell_Id` = p.`prd_sell_Id` 
+	                 WHERE p.`prd_movie_Id` = m.`prd_movie_Id`";
+      
+	if (isset($_GET['searchForm']))  {    
+		 
+		$namedParameters = array();
 		
-		$categoryId = $_GET['categoryId'];
-		
-		//This is the WRONG way to create queries because it allows SQL injection
-		/*
-		$sql = "SELECT productName, price , productId
-				FROM oe_product
-				WHERE categoryId = '" . $categoryId . "'" ;
-		 */  
-	
-		 	$sql = "SELECT productName, price, productId 
-				FROM oe_product
-				WHERE categoryId = :categoryId"; //using Named Parameters (prevents SQL injection)
-		    
-		    $namedParameters = array();
-			$namedParameters[":categoryId"] = $categoryId;
+		if (isset($_GET['prd_genre_ID']) AND !empty($_GET['prd_genre_ID']  )) 
+		{
+			$prd_genre_ID = $_GET['prd_genre_ID']; 
 			
+		 
 			
+			if ($prd_genre_ID != 'AA') {
+				 
+				$prd_genre_ID = $_GET['prd_genre_ID'];
+				$sql .=	" AND prd_genre_ID = :prd_genre_ID";
+				 
+				$namedParameters[":prd_genre_ID"] = $prd_genre_ID;
+			}
+		}	
+		     
+			$movie = $_GET['prd_movie'];
 			
-			$maxPrice = $_GET['maxPrice'];
-			
-			if (!empty($maxPrice)) { //the user entered a max price value in the form
-				
-			   //$sql = $sql . " ";
-			   $sql .= " AND price <= :price"; //using named parameters
-			   $namedParameters[":price"] = $maxPrice;
+			if (!empty($movie) AND $movie > ' ') { //the user entered a movie value in the form
+			  
+			   $movie = "%" . $movie . "%";	 
+			   $movie = str_replace(' ', '', $movie)  ; 
+			   $sql .= " AND m.prd_movie_nm   LIKE :movie"; //using named parameters
+			   $namedParameters[":movie"] = "%" . $movie . "%";
 			 
+			 			 
 			}
 			
-			if (isset($_GET['healthyChoice'])) {
+			
+			 
+			if (isset($_GET['sYear']) AND !empty($_GET['sYear']  )) {
 				
-				$sql .= " AND healthyChoice = 1";
+			$sYear = $_GET['sYear'] ;
+			if ($sYear  > 1900 ) { //the user entered a movie value in the form
+			  
+			   
+			   $sql .= " AND m.prd_movie_year   = :sYear"; //using named parameters
+			   $namedParameters[":sYear"] = $sYear ; 
+			}
+			 			 
 			}
 			
-			$orderByFields = array("price", "productName");
-			$orderByIndex = array_search($_GET['orderBy'],$orderByFields);
 			
-			//$sql .= " ORDER BY " . $_GET['orderBy'];
-			$sql .= " ORDER BY " . $orderByFields[$orderByIndex]; //prevents SQL injection
+						 
+			if (isset($_GET['orderBy']) AND !empty($_GET['orderBy']  )) {
+						
+				$orderBy =	$_GET['orderBy'];
+												
+				$orderByFields = array("prd_movie_nm", "prd_movie_dir", "prd_movie_year");
+			    $orderByIndex = array_search($_GET['orderBy'],$orderByFields);
 			
+			    $sql .= " ORDER BY " . $orderByFields[$orderByIndex]; //prevents SQL injection
+				 
+			}
+			
+			 		
 			
 			
 		    $statement = $conn->prepare($sql);
@@ -78,23 +98,9 @@ global $conn;
 			$records = $statement->fetchAll(PDO::FETCH_ASSOC);
 			return $records;
 			
-			/*
-			foreach($records as $record) {
-		   	   echo $record['productName'] . "-" . $record['price'] . "<br>";
-		    }
-			 * 
-			 */	
-	}
-}
-
-
-function isHealthyChoiceChecked(){
-			
-   if (isset($_GET['healthyChoice'])){
-   	 return "checked";
-   }		
 	
-}
+	}
+}  // end filter products
 
 
 

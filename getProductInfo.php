@@ -5,26 +5,36 @@ include 'include/database.inc.php';
 $conn = getDatabaseConnection(); //gets database connection
 
 // Check if productId has been set
-if (isset($_GET['productId'])) {
+if (isset($_GET['prd_movie_Id'])) {
 	
-	$productId = $_GET['productId'];
+	$prd_movie_Id = $_GET['prd_movie_Id'];
 	
-	$sql = "SELECT productName, productDescription
-		FROM oe_product WHERE productId = " . $_GET['productId'];
+	$sql = "SELECT prd_movie_nm, prd_movie_desc , prd_movie_year, prd_movie_dir 
+	FROM prd_movie WHERE prd_movie_Id = :prd_movie_Id"; 
 		
-	$sql1 = "SELECT productName, productDescription      
-	        FROM oe_product WHERE productId = :productId";      // Dont know why it wont work!!!!
+	
 
     $namedParameters = array();
-    $namedParameters[":productId"] = $productId;	
+    $namedParameters[":prd_movie_Id"] = $prd_movie_Id;	
 	
-	$records = getDataBySQL($sql);    //// test with $SQL1 or $SQL
+	
+     $conn = getDatabaseConnection();	
+     $statement = $conn->prepare($sql);
+     $statement->execute($namedParameters);
+	 $records = $statement->fetchAll(PDO::FETCH_ASSOC);
+	 
+
 	
 	foreach ($records as $record) {
-		echo "ProductName: " . $record['productName'] . "<br />";
-		echo "ProductDescription: " . $record['productDescription'] . "<br />";
+		echo "Movie: " . $record['prd_movie_nm'] . "<br />";
+		echo  $record['prd_movie_desc']  . "<br />";
+		echo "Director: " . $record['prd_movie_dir'] ." " . $record['prd_movie_year'] ;
 	}
 }	
 ?>
 
 
+
+ 
+ 
+   

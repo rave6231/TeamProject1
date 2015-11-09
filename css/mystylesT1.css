@@ -1,7 +1,7 @@
 h1 {
 	text-align: center;
 	color: ##0D3349;
-	background-color: #fef000;
+	background-color: #f1da36;
 }
 h2, h3 {
 	color: black;
@@ -9,25 +9,50 @@ h2, h3 {
 }
 
 iframe {
-	background-color: #fefcef;
+	background-color: #fefc9f;
 	font-size: 12px right : 0;
 	bottom: 0;
-	left:right;
-	float: left;
+	float: right;
 	width="200";
 	height="100" ;
 	frameborder="1";
 
 }
 
+body {
 
-.body1 {
-	background-image: url(img/bk.jpg);
-	margin: 0px auto;
-	text-align: center;
-	color: Black;
-	background-size: 100% auto;
-}
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 13px;
+			background:"img/public_domain_astronomy_18.jpg"
+			
+		
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefcea+0,f1da36+100;Gold+3D */
+			background: rgb(254,252,234); /* Old browsers */
+			background: -moz-linear-gradient(top,  rgba(254,252,234,1) 0%, rgba(241,218,54,1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,252,234,1)), color-stop(100%,rgba(241,218,54,1))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* IE10+ */
+			background: linear-gradient(to bottom,  rgba(254,252,234,1) 0%,rgba(241,218,54,1) 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
+
+           }
+
+
+ tr:nth-of-type(odd) {
+      background-color:#ccc;
+       
+       
+    }
+    
+.tblRw1{
+			background-color: #fefc9f;
+			text-align: center;
+			font-size: 14px;
+			color: red;
+			
+
+
 .tab {
 	margin-left: 40px;
 }
